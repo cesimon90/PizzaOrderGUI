@@ -65,7 +65,6 @@ public class PizzaGUIFrame extends JFrame
 
         orderButton.addActionListener(new ActionListener()
         {
-            @Override
             public void actionPerformed(ActionEvent e)
             {
                 compileOrder();
@@ -74,7 +73,6 @@ public class PizzaGUIFrame extends JFrame
 
         clearButton.addActionListener(new ActionListener()
         {
-            @Override
             public void actionPerformed(ActionEvent e)
             {
                 // Clear all selections
@@ -90,7 +88,6 @@ public class PizzaGUIFrame extends JFrame
 
         quitButton.addActionListener(new ActionListener()
         {
-            @Override
             public void actionPerformed(ActionEvent e)
             {
                 int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?", "Quit", JOptionPane.YES_NO_OPTION);
@@ -119,20 +116,17 @@ public class PizzaGUIFrame extends JFrame
         return panel;
     }
 
-    private void compileOrder()
-    {
+    private void compileOrder() {
         StringBuilder orderDetails = new StringBuilder();
         // Get crust
         String crustType = "";
         if (thinCrustRadioButton.isSelected())
         {
             crustType = "Thin";
-        }
-        else if (regularCrustRadioButton.isSelected())
+        } else if (regularCrustRadioButton.isSelected())
         {
             crustType = "Regular";
-        }
-        else if (deepDishCrustRadioButton.isSelected())
+        } else if (deepDishCrustRadioButton.isSelected())
         {
             crustType = "Deep-dish";
         }
@@ -145,6 +139,7 @@ public class PizzaGUIFrame extends JFrame
         // Get toppings
         orderDetails.append("Toppings: ");
         boolean isFirstTopping = true;
+        double toppingPrice = 0; // Initialize topping price
         for (JCheckBox checkBox : toppingsCheckBoxes)
         {
             if (checkBox.isSelected())
@@ -155,13 +150,13 @@ public class PizzaGUIFrame extends JFrame
                 }
                 orderDetails.append(checkBox.getText());
                 isFirstTopping = false;
+                toppingPrice += 1.00; // Add $1.00 for each selected topping
             }
         }
         orderDetails.append("\n");
 
         // Calculate subtotal, tax, and total
         double basePrice = size.equals("Small") ? 8.00 : size.equals("Medium") ? 12.00 : size.equals("Large") ? 16.00 : 20.00;
-        double toppingPrice = toppingsCheckBoxes.length; // Each topping costs $1
         double subtotal = basePrice + toppingPrice;
         double tax = 0.07 * subtotal;
         double total = subtotal + tax;
